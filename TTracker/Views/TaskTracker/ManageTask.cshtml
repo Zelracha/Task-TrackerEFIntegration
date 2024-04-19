@@ -1,0 +1,60 @@
+﻿@model TTracker.Models.Task
+
+@{
+    ViewData["Title"] = "ManageTask";
+}
+
+
+@if (Model.Id > 0)
+{
+    <h1>Edit Task</h1>
+}
+else
+{
+    <h1>Add Task</h1>
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" asp-action="Save">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Id" class="control-label"></label>
+                <input asp-for="Id" class="form-control" readonly />
+            </div>
+            <div class="form-group">
+                <label asp-for="Title" class="control-label"></label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="dueDate" class="control-label"></label>
+                <input asp-for="dueDate" class="form-control" />
+                <span asp-validation-for="dueDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                @*this particular button invokes the "Save" action, based on the form's asp-action see line#:20'" *@
+                <input type="submit" value="Save" class="btn btn-primary" />
+
+                @if (Model.Id > 0)
+                {
+                    //Upon submission, this particular button invokes the "Delete" action due to the presence of the "asp-action"
+                    <input type="submit" value="Delete" class="btn btn-danger" asp-action="Delete" />
+                }
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
